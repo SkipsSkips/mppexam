@@ -5,7 +5,7 @@ import { Character } from './types';
 
 const app = express();
 const router = Router();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
