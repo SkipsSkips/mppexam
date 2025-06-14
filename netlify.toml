@@ -1,0 +1,4 @@
+[build]
+  base = "game2"
+  publish = ".next"
+  command = "npm run build" 
