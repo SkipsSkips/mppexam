@@ -7,8 +7,6 @@ import CharacterForm from '@/components/CharacterForm';
 import CharacterStats from '@/components/CharacterStats';
 import { generateRandomCharacters } from '@/utils/characterGenerator';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://mppexam.onrender.com/api';
-
 export default function Home() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
@@ -23,7 +21,7 @@ export default function Home() {
 
   const fetchCharacters = async () => {
     try {
-      const response = await fetch(`${API_BASE}/characters`);
+      const response = await fetch('https://mppexam.onrender.com/api/characters');
       if (!response.ok) throw new Error('Failed to fetch characters');
       const data = await response.json();
       setCharacters(data);
@@ -35,7 +33,7 @@ export default function Home() {
 
   const handleCreateCharacter = async (character: Omit<Character, 'id'>) => {
     try {
-      const response = await fetch(`${API_BASE}/characters`, {
+      const response = await fetch('https://mppexam.onrender.com/api/characters', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(character),
@@ -57,7 +55,7 @@ export default function Home() {
 
   const handleUpdateCharacter = async (character: Character) => {
     try {
-      const response = await fetch(`${API_BASE}/characters`, {
+      const response = await fetch('https://mppexam.onrender.com/api/characters', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(character),
@@ -82,7 +80,7 @@ export default function Home() {
     if (!confirm('Are you sure you want to delete this character?')) return;
 
     try {
-      const response = await fetch(`${API_BASE}/characters?id=${id}`, {
+      const response = await fetch(`https://mppexam.onrender.com/api/characters?id=${id}`, {
         method: 'DELETE',
       });
 
@@ -120,7 +118,7 @@ export default function Home() {
         const randomIndex = Math.floor(Math.random() * characters.length);
         const characterToRemove = characters[randomIndex];
         try {
-          const response = await fetch(`${API_BASE}/characters?id=${characterToRemove.id}`, {
+          const response = await fetch(`https://mppexam.onrender.com/api/characters?id=${characterToRemove.id}`, {
             method: 'DELETE',
           });
 
@@ -136,7 +134,7 @@ export default function Home() {
         // Add a new character
         const newCharacters = generateRandomCharacters(1, Math.max(0, ...characters.map(c => c.id)) + 1);
         try {
-          const response = await fetch(`${API_BASE}/characters`, {
+          const response = await fetch('https://mppexam.onrender.com/api/characters', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newCharacters[0]),
